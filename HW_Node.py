@@ -73,10 +73,9 @@ def id_edit_del_show(text):
         if id == Note().get_id(notes):
             option = False
             if text == 'edit':
-                title = input('Введите название заметки: ')
-                body =  input('Введите описание заметки: ')
-                Note().set_title(notes, title())
-                Note().set_body(notes, body())
+                note = create_note()
+                Note().set_title(notes, note.title())
+                Note().set_body(notes, note.body())
                 Note().set_date(notes)
                 print('Заметка изменена...\n')
             if text == 'del':
