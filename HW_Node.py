@@ -1,7 +1,7 @@
 
 
 def main():
-    print('Консольная программа "Заметки"')
+    print('\nКонсольная программа "Заметки"')
     input_from_user = ''
     while input_from_user != '0':
         menu()
@@ -88,6 +88,10 @@ def id_edit_del_show(text):
         print('\nТакой заметки нет, возможно, вы ввели неверный id')
     write_file(array, 'a')
 
+def create_note():
+    title = input('Введите Название заметки: ')
+    body = input('Введите Описание заметки: ')
+    return Note(title=title, body=body)
 
 def read_file():
     try:
