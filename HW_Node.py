@@ -52,41 +52,40 @@ def show(text):
             option = False
             if date in Note().get_date(notes):
                 print(Note().map_note(notes))
-    if option == True:
+    if option:
         print('Нет ни одной заметки...')
 
 def add():
-    number = 6
-    note = create_note(number)
+    note = create_note()    
     array = read_file()
     for notes in array:
         if Note().get_id(note) == Note().get_id(notes):
             Note().set_id(note)
     array.append(note)
     write_file(array, 'a')
-    print('Заметка добавлена...\n')
+    print('\nЗаметка добавлена...')
 
 def id_edit_del_show(text):
-    number = 6
-    id = input('Введите id необходимой заметки: ')
+    id = input('Введите id заметки: ')
     array = read_file()
     option = True
     for notes in array:
         if id == Note().get_id(notes):
             option = False
             if text == 'edit':
-                note = create_note(number)
-                Note().set_title(notes, note.get_title())
-                Note().set_body(notes, note.get_body())
+                title = input('Введите название заметки: ')
+                body =  input('Введите описание заметки: ')
+                Note().set_title(notes, title())
+                Note().set_body(notes, body())
                 Note().set_date(notes)
                 print('Заметка изменена...\n')
             if text == 'del':
                 array.remove(notes)
-                print('Заметка удалена...\n')
+                print('\nЗаметка удалена...')
             if text == 'show':
                 print(Note().map_note(notes))
     if option == True:
-        print('Такой заметки нет, возможно, вы ввели неверный id\n')
+        print('\nТакой заметки нет, возможно, вы ввели неверный id')
     write_file(array, 'a')
 
 
@@ -100,16 +99,10 @@ def read_file():
             note = Note(id = split_n[0], title = split_n[1], body = split_n[2], date = split_n[3])
             array.append(note)
     except Exception:
-        print('Нет сохраненных заметок...')
+        print('/nЗаметки не обнаружены...')
     finally:
         return array
 
-def create_note(number):
-    title = check_len_text_input(
-        input('Введите Название заметки: '), number)
-    body = check_len_text_input(
-        input('Введите Описание заметки: '), number)
-    return Note(title=title, body=body)
 
 def write_file(array, mode):
     file = open("notes.csv", mode='w', encoding='utf-8')
@@ -122,16 +115,8 @@ def write_file(array, mode):
     file.close
 
 
-def check_len_text_input(text, n):
-    while len(text) <= n:
-        print(f'Текст должен быть больше {n} символов\n')
-        text = input('Введите текст: ')
-    else:
-        return text
-
 from datetime import datetime
 import uuid
-
 
 class Note():
 
